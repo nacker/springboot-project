@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/api?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8
+    username: root
+    password: 123456
+    hikari:
+      connection-test-query: SELECT 1 # 自动检测连接
+      connection-timeout: 60000 #数据库连接超时时间,默认30秒
+      idle-timeout: 500000 #空闲连接存活最大时间，默认600000（10分钟）
+      max-lifetime: 540000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      maximum-pool-size: 12 #连接池最大连接数，默认是10
+      minimum-idle: 10 #最小空闲连接数量
+      pool-name: SPHHikariPool # 连接池名称
+  jackson:
+    time-zone: GMT+8
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+      password:
+
+#用于打印框架生成的sql语句，便于调试
+# MyBatis-Plus 配置，用于管理 MyBatis-Plus 的全局行为和特性
+mybatis-plus:
+  # MyBatis-Plus 基础配置，控制 SQL 执行、日志等行为
+  configuration:
+    # 指定 MyBatis 的日志实现类，将 SQL 语句和参数信息输出到控制台，方便开发调试
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰 确保为true（默认已是true）
+    map-underscore-to-camel-case: true
+  # 指定 MyBatis-Plus 扫描 XML 映射文件的路径，在类路径下的 mapper/xml 目录查找所有 .xml 文件
+  mapper-locations: classpath:mapper/xml/*.xml
+  # MyBatis-Plus 全局配置，设置影响整个应用的配置项
+  global-config:
+    # 数据库相关的全局配置，设置与数据库交互的默认行为
+    db-config:
+      # 指定实体类中主键的生成策略，auto 表示使用数据库自增策略
+      id-type: auto
+      # 指定逻辑删除字段的名称，通过修改该字段值标记记录是否删除
+      logic-delete-field: is_deleted
+      # 指定逻辑删除字段表示已删除的值，当该字段值为 1 时，视为记录已删除
+      logic-delete-value: 1
+      # 指定逻辑删除字段表示未删除的值，当该字段值为 0 时，视为记录未删除
+      logic-not-delete-value: 0
+
+
+springdoc:
+  default-flat-param-object: true
+
+
+
+
